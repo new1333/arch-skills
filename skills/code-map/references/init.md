@@ -40,7 +40,7 @@
 
 ## 阶段 3：自校验 + 硬门槛 + 报告
 
-四查（定义与处置表见 [maintenance.md](maintenance.md)）默认跑本 skill 自带核查器：`python <本 skill 安装目录>/scripts/check-map.py <目标仓路径>`——路径/symbols/计数/链接一次全查，MISS/BAD/DRIFT/BROKEN-LINK 清单零修改，发现按处置表机械修。跑不了或栈不支持 → 落 maintenance.md 指令式清单，全量降抽样（如 symbols 每模块抽 2 对 export，治「导出名 ≠ 文件名」）。
+四查与 INDEX ≤1k tokens 守门默认跑本 skill 自带核查器 check-map.py；用法、输出标签与跑不了时的指令式回退见 [maintenance.md](maintenance.md)（谎报/缺口处置表同在此），发现按处置表机械修。
 
 两项保持指令式（不进脚本）：
 
@@ -49,7 +49,6 @@
 
 然后：
 
-- INDEX ≤1k tokens（字节近似实测：拉丁文本 ≈ 4 bytes/token，CJK 文本 ≈ 1.8 bytes/token，取加权估算即可）。
 - 写入硬门槛段：按 [hard-gate-section.md](hard-gate-section.md) 的规则与模板，纯追加，收尾展示写入内容。
 - 总结报告（最终交付）：
   - 模块清单

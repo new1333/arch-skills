@@ -6,7 +6,7 @@
 
 - 每模块一行，仅三样：模块名（链接）+ 一句话职责 + 路由前缀（嵌入式模块写「（嵌入式）」，redirect 前缀用 `→` 跟在主前缀后）。
 - 头部记全图 `verified: <short-sha>`（格式见下方 Coverage）。
-- **≤1k tokens 守门**（字节近似实测）——INDEX 是每 session 的常驻成本。
+- **≤1k tokens 守门**（check-map.py 自动守，`OVER`）——INDEX 是每 session 的常驻成本。
 
 行样例：
 
