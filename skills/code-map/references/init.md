@@ -40,12 +40,12 @@
 
 ## 阶段 3：自校验 + 硬门槛 + 报告
 
-四查（清单详见 [maintenance.md](maintenance.md)）：
+四查（定义与处置表见 [maintenance.md](maintenance.md)）默认跑本 skill 自带核查器：`python <本 skill 安装目录>/scripts/check-map.py <目标仓路径>`——路径/symbols/计数/链接一次全查，MISS/BAD/DRIFT/BROKEN-LINK 清单零修改，发现按处置表机械修。跑不了或栈不支持 → 落 maintenance.md 指令式清单，全量降抽样（如 symbols 每模块抽 2 对 export，治「导出名 ≠ 文件名」）。
 
-1. 路径全量对 `git ls-files`。
-2. symbols 每模块抽 2 对实际 export（治「导出名 ≠ 文件名」）。
-3. 跨模块重复实现扫描 → 只报告不裁决（init 是制图员，不是法官）。
-4. 随机 3 个「X 在哪」下钻链路走通（INDEX → 模块 → 条目 → 代码）。
+两项保持指令式（不进脚本）：
+
+- 跨模块重复实现扫描 → 只报告不裁决（init 是制图员，不是法官）。
+- 随机 3 个「X 在哪」下钻链路走通（INDEX → 模块 → 条目 → 代码）。
 
 然后：
 

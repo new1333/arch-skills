@@ -50,6 +50,8 @@ description: Use when the target project has (or needs) a code map in docs/code-
 
 **update**：显式对账刷新。触发：全图 verified 落后明显（>50 commits 或 >2 周）、大重构合并后、人喊。按新鲜度头分模块——touched：深查四查 + 轻量重复实现扫描（只报告）+ 重算 Coverage + 推进 verified；untouched：diff 为空即免检推头。跑完全图对新 HEAD 为真。
 
+四查默认机械化：跑本 skill 自带的 `scripts/check-map.py`（单脚本、纯 stdlib）——`python <本 skill 安装目录>/scripts/check-map.py <目标仓路径>`，产 MISS/BAD/DRIFT/BROKEN-LINK 发现清单、零修改。跑不了或栈不支持（symbols 表 v1 仅 Nuxt/Vue/TS）才落指令式清单。
+
 update 不做语义审读——职责散文失实靠干活 agent 机会性同笔修。待定归属顺手复审：三锚重跑，倾向已明显的当场归位，仍不明的进报告；人拍板即移动条目。
 
 四查清单、谎报/缺口处置表、review 建议：[references/maintenance.md](references/maintenance.md)。
