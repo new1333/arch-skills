@@ -1,11 +1,11 @@
 ---
 name: code-map
-description: Use when the target project has (or needs) a code map in docs/code-map/ — consult it before adding or changing any feature, fix or add map entries in the same change as the code, or when the user invokes init (chart an existing unmapped codebase), update (reconcile the map against git history), or status (one-line freshness report).
+description: Use when the target project has (or needs) a code map in docs/code-map/ — consult it before any feature work and keep its entries fresh in the same change as the code — or when the user invokes init (chart an existing unmapped codebase), update (reconcile the map against git history), or status (one-line freshness report).
 ---
 
 # code-map
 
-目标项目 `docs/code-map/` 下的纯 Markdown 文件层级，索引「功能在哪」。三层下钻：`INDEX.md`（模块层）→ `<module>.md`（功能条目）→ 代码本身。地图只指路，不描述实现——单一数据源是代码。
+目标项目 `docs/code-map/` 下的纯 Markdown 文件层级，索引「功能在哪」。地图只指路，不描述实现——单一数据源是代码。
 
 本 skill 是制图与维护工具：init 收编存量、update 对账、日常同笔保鲜。查询零仪式——写进目标项目 AGENTS.md 的硬门槛段自足生效（模板：[references/hard-gate-section.md](references/hard-gate-section.md)）。
 
@@ -19,7 +19,7 @@ description: Use when the target project has (or needs) a code map in docs/code-
 2. `<module>.md` — 找功能条目；`files` / `symbols` 直指实现。
 3. 需要实现细节才打开代码文件。
 
-读图零仪式。开文件 404、grep symbols 不中 = 撞见**谎报**（事实字段失实）：代码为准，同笔只修事实字段（路径 / symbols / 计数），条目存废与归属进报告。撞见**覆盖缺口**（代码有、图无）：只报告，交 update 或人，不代判。
+读图零仪式。开文件 404、grep symbols 不中 = 撞见**谎报**：代码为准，同笔只修事实字段，条目存废与归属进报告。代码有、图无 = **覆盖缺口**：只报告，不代判。处置细节：[references/maintenance.md](references/maintenance.md) 处置表。
 
 ## 开发纪律：动功能时的地图规矩
 
@@ -33,14 +33,10 @@ description: Use when the target project has (or needs) a code map in docs/code-
 
 ## init：收编无图存量代码
 
-项目有存量代码而无 `docs/code-map/` 时跑。绿地空仓库不预跑 init——靠开发纪律自然长图，硬门槛段在首次 agent 接触时写入。
-
-四阶段全自动零停顿：结构侦察（零读码）→ 定模块（三锚交集，宁可归错加标注、不可停下来等）→ 逐模块成图（职责只许来自读过的代码）→ 自校验 + 硬门槛 + 报告。完成判据、停顿例外、断点续跑与全部细节：[references/init.md](references/init.md)。
+项目有存量代码而无 `docs/code-map/` 时跑；绿地空仓库不预跑——靠开发纪律自然长图，硬门槛段在首次 agent 接触时写入。全自动零停顿，四阶段与全部细节：[references/init.md](references/init.md)。
 
 ## update 与 status
 
-**status**：只读探测器。各模块 `verified` 行 + `git diff` 计数 → 一行「N/M 模块 stale、落后 X commits」，零写入。
+**status**：只读探测器，一行「N/M 模块 stale、落后 X commits」，零写入。
 
-**update**：显式对账刷新。触发：全图 verified 落后明显、大重构合并后、人喊。按新鲜度头分模块——touched：深查四查 + 轻量重复实现扫描（只报告）+ 重算 Coverage + 推进 verified；untouched：diff 为空即免检推头。跑完全图对新 HEAD 为真。
-
-四查默认机械化（自带核查器 `scripts/check-map.py`）。update 细节与触发阈值、四查用法与指令式回退、谎报/缺口处置表、Coverage 升档、review 建议：[references/maintenance.md](references/maintenance.md)。
+**update**：显式对账刷新。触发：全图 verified 落后明显（>50 commits / >2 周）、大重构合并后、人喊。跑完全图对新 HEAD 为真。四查默认机械化（`scripts/check-map.py`）。update 细节与四查用法：[references/maintenance.md](references/maintenance.md)。

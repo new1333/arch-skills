@@ -6,8 +6,6 @@
 
 ## update：对账刷新
 
-触发：全图 verified 落后明显（>50 commits 或 >2 周）、大重构合并后、人喊。
-
 按新鲜度头分模块：
 
 - **touched**（模块 scope 内 diff 非空）：深查四查（默认整图跑一遍 check-map.py——秒级，发现按模块认领）+ 轻量重复实现扫描 + 重算 Coverage + 推进 verified。
