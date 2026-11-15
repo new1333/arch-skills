@@ -1,7 +1,8 @@
 """code-map 四查核查器：只产发现清单，零修改——裁决与修图归 agent（处置表见 references/maintenance.md）。
 
 用法: python check-map.py <目标仓路径>
-输出: MISS / BAD / DRIFT / BROKEN-LINK 发现清单 + 各查汇总（+ NOTE 说明行）；有发现退出码 1。
+输出: MISS / BAD / DRIFT / BROKEN-LINK / OVER 发现清单 + 各查汇总（+ NOTE 说明行）；有发现退出码 1。
+      OVER = INDEX token 预算超标（四查外的守门项，非谎报；字节近似：拉丁 ≈4 B/token、CJK ≈1.8 B/token）。
 栈检测表（「什么算导出」）v1 仅 Nuxt/Vue/TS；未识别栈时仅 symbols 查跳过，其余三查照跑。
 """
 import re
@@ -20,6 +21,7 @@ EXPORT_LIST = re.compile(r"\bexport\s*\{([^}]*)\}")
 DEFINE_STORE = re.compile(r"defineStore\(\s*[\"']([A-Za-z0-9_-]+)[\"']")
 IDENT = re.compile(r"[A-Za-z][A-Za-z0-9_]*")
 CODE_EXT = (".ts", ".tsx", ".js", ".mjs", ".vue")
+INDEX_TOKEN_BUDGET = 1000
 
 
 def read(path):
@@ -27,6 +29,13 @@ def read(path):
         return path.read_text(encoding="utf-8", errors="ignore")
     except OSError:
         return ""
+
+
+def est_tokens(text):
+    """字节近似（手算口径同 maintenance.md 指令式回退）：拉丁 ≈4 B/token；非 ASCII（CJK 及全角标点）≈1.8 B/token。"""
+    cjk = sum(len(c.encode("utf-8")) for c in text if ord(c) > 127)
+    total = len(text.encode("utf-8"))
+    return (total - cjk) / 4 + cjk / 1.8
 
 
 def parse_files_fields(text):
@@ -253,6 +262,20 @@ def check_links(md_files):
     return len(broken)
 
 
+def check_index_budget(md_files):
+    """INDEX ≤1k tokens 守门（map-format.md）——INDEX 是每 session 的常驻成本。"""
+    index = next((f for f in md_files if f.name == "INDEX.md"), None)
+    if index is None:
+        print("index-budget: skipped — no INDEX.md")
+        return 0
+    est = round(est_tokens(read(index)))
+    over = est > INDEX_TOKEN_BUDGET
+    print(f"index-budget: estimated={est} budget={INDEX_TOKEN_BUDGET} over={1 if over else 0}")
+    if over:
+        print(f"OVER {index.name}: estimated={est} budget={INDEX_TOKEN_BUDGET}")
+    return 1 if over else 0
+
+
 def main():
     if len(sys.argv) != 2:
         sys.exit("usage: python check-map.py <target-repo-path>")
@@ -272,6 +295,7 @@ def main():
     total += check_counts(md_files, code)
     total += check_symbols(md_files, code)
     total += check_links(md_files)
+    total += check_index_budget(md_files)
     print("result:", "OK — no findings" if total == 0 else f"{total} finding(s)")
     sys.exit(1 if total else 0)
 

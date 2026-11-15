@@ -36,7 +36,7 @@ _Avoid_: 与覆盖缺口混用；挂条目级 stale 标记代替修正（散标�
 _Avoid_: 当作谎报机械修；把 agent 新建功能走的硬门槛「顺手补条目」算进缺口处置。
 
 **核查器（checker）**:
-skill 自带的 scripts/ 四查脚本：对账地图事实字段 vs 代码，只产发现清单（MISS/BAD/DRIFT），零修改零生成；裁决与修图归 agent 按处置表。凡四查处皆可用（update 深查、init 自校验）；paths/counts/links 格式驱动栈无关，symbols 挂栈检测表（v1 只装 Nuxt/TS，未识别栈仅该查降级跳过）。脚本为默认路径，指令式清单是 fallback 与四查的定义文本。
+skill 自带的 scripts/ 四查脚本：对账地图事实字段 vs 代码，只产发现清单（MISS/BAD/DRIFT/BROKEN-LINK），零修改零生成；另守 INDEX ≤1k tokens 预算（OVER，字节近似，守门项非谎报）。裁决与修图归 agent 按处置表。凡四查处皆可用（update 深查、init 自校验）；paths/counts/links 格式驱动栈无关，symbols 挂栈检测表（v1 只装 Nuxt/TS，未识别栈仅该查降级跳过）。脚本为默认路径，指令式清单是 fallback 与四查的定义文本。
 _Avoid_: 与扫描器混用；让核查器写地图（它是证据生成器，不是修图者）；栈不支持时整脚本拒绝服务（只降级 symbols 一查）。
 
 **扫描器（scanner）**:
