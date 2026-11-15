@@ -35,6 +35,14 @@ _Avoid_: 与覆盖缺口混用；挂条目级 stale 标记代替修正（散标�
 代码库已存在而地图未收录的实现：未映射的新文件、目录计数漂移多出的部分。补齐需功能归属判断，只报告交 update 流程或人，不代判、不顺手补。
 _Avoid_: 当作谎报机械修；把 agent 新建功能走的硬门槛「顺手补条目」算进缺口处置。
 
+**核查器（checker）**:
+skill 自带的 scripts/ 四查脚本：对账地图事实字段 vs 代码，只产发现清单（MISS/BAD/DRIFT），零修改零生成；裁决与修图归 agent 按处置表。凡四查处皆可用（update 深查、init 自校验）；paths/counts/links 格式驱动栈无关，symbols 挂栈检测表（v1 只装 Nuxt/TS，未识别栈仅该查降级跳过）。脚本为默认路径，指令式清单是 fallback 与四查的定义文本。
+_Avoid_: 与扫描器混用；让核查器写地图（它是证据生成器，不是修图者）；栈不支持时整脚本拒绝服务（只降级 symbols 一查）。
+
+**扫描器（scanner）**:
+代判断成图的可执行生成器（python/ts 扫描器）：聚类定模块、生成条目内容——init 的判断价值所在，已划出 scope，init 保持指令式。
+_Avoid_: 与核查器混用——边界在「替 agent 生成地图内容」，不在「skill 里有没有脚本」。
+
 **硬门槛段（hard-gate section）**:
 init 写进目标项目 AGENTS.md/CLAUDE.md 的自足段：动功能前必走代码地图、复用已映射实现、未命中先全局搜索再新建并补条目、地图与代码冲突以代码为准并顺手修图。
 _Avoid_: 视作 code-map skill 的一部分（它自足生效，无需安装 skill）；与地图本体（`docs/code-map/`）混淆。
